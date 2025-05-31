@@ -1,13 +1,15 @@
-import { useState } from "react";
-import axios from "axios";
 import {
-  TextField,
   Button,
-  Box,
-  Typography,
   Container,
-  Paper,
-} from "@mui/material";
+  Field,
+  Heading,
+  Input,
+  NumberInput,
+  Stack,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
+import { useState } from "react";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
@@ -26,80 +28,61 @@ const CreateProject = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const token = localStorage.getItem("accessToken");
-      await axios.post("http://localhost:8000/api/projects/", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      alert("Project created successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create project");
-    }
+
+    console.log(formData);
+    // try {
+    //   const token = localStorage.getItem("accessToken");
+    //   await axios.post("http://localhost:8000/api/projects/", formData, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   });
+    //   alert("Project created successfully!");
+    // } catch (err) {
+    //   console.error(err);
+    //   alert("Failed to create project");
+    // }
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
-        <Typography variant="h5" gutterBottom>
-          Create New Project
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
-          <TextField
-            label="Project Title"
-            name="title"
-            fullWidth
-            margin="normal"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            label="Description"
-            name="description"
-            fullWidth
-            margin="normal"
-            multiline
-            rows={4}
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            label="Price"
-            name="price"
-            type="number"
-            fullWidth
-            margin="normal"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-          <TextField
-            label="Deadline"
-            name="deadline"
-            type="date"
-            fullWidth
-            margin="normal"
-            value={formData.deadline}
-            onChange={handleChange}
-            InputLabelProps={{ shrink: true }}
-            required
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 2 }}
-          >
-            Create Project
-          </Button>
-        </Box>
-      </Paper>
-    </Container>
+    <form onSubmit={handleSubmit}>
+      <Container spaceY={3} marginY={5} maxWidth={720}>
+        <Heading as="h2">Create New Project</Heading>
+        <Stack gap={5}>
+          <Field.Root required>
+            <Field.Label>
+              Project Title
+              <Field.RequiredIndicator />
+            </Field.Label>
+            <Input name="title" type="text" onChange={handleChange} />
+          </Field.Root>
+          <Field.Root required>
+            <Field.Label>
+              Project Description
+              <Field.RequiredIndicator />
+            </Field.Label>
+            <Textarea rows={5} onChange={handleChange} name="description" />
+          </Field.Root>
+          <Stack direction="row" gap={5}>
+            <Field.Root required>
+              <Field.Label>
+                Project Price
+                <Field.RequiredIndicator />
+              </Field.Label>
+              <Input name="price" type="number" onChange={handleChange} />
+            </Field.Root>
+            <Field.Root required>
+              <Field.Label>
+                Project Deadline
+                <Field.RequiredIndicator />
+              </Field.Label>
+              <Input type="date" onChange={handleChange} name="deadline" />
+            </Field.Root>
+          </Stack>
+          <Button type="submit">Create Project</Button>
+        </Stack>
+      </Container>
+    </form>
   );
 };
 

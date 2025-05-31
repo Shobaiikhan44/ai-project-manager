@@ -1,78 +1,70 @@
 import { useState } from "react";
-import axios from "axios";
 import {
   Container,
-  TextField,
+  Stack,
+  Field,
   Button,
-  Typography,
-  Paper,
+  Heading,
+  Input,
   Box,
-  Alert,
-} from "@mui/material";
+} from "@chakra-ui/react";
 
 const Login = () => {
-  const [username] = useState("josefitani"); // hardcoded as per your code
+  const username = "josefitani";
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState("");
-  const [error, setError] = useState("");
+  // const [token, setToken] = useState("");
+  // const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:8000/api/token/", {
-        username,
-        password,
-      });
-      setToken(response.data.access);
-      localStorage.setItem("accessToken", response.data.access);
-      setError("");
-    } catch (error) {
-      console.error("Login failed:", error);
-      setError("Invalid credentials. Please try again.");
-    }
+
+    console.log({ username, password });
+    // try {
+    //   const response = await axios.post("http://localhost:8000/api/token/", {
+    //     username,
+    //     password,
+    //   });
+    //   setToken(response.data.access);
+    //   localStorage.setItem("accessToken", response.data.access);
+    //   setError("");
+    // } catch (error) {
+    //   console.error("Login failed:", error);
+    //   setError("Invalid credentials. Please try again.");
+    // }
   };
 
   return (
-    <Container maxWidth="sm">
-      <Paper elevation={3} sx={{ p: 4, mt: 6 }}>
-        <Typography variant="h5" gutterBottom>
-          Login (only for josefitani3)
-        </Typography>
-        {error && <Alert severity="error">{error}</Alert>}
-        <Box component="form" onSubmit={handleLogin} sx={{ mt: 2 }}>
-          <TextField
-            label="Username"
-            fullWidth
-            value={username}
-            InputProps={{ readOnly: true }}
-            margin="normal"
-          />
-          <TextField
-            label="Password"
-            type="password"
-            fullWidth
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            margin="normal"
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ mt: 2 }}
-          >
-            Login
-          </Button>
-        </Box>
-        {token && (
-          <Alert severity="success" sx={{ mt: 3, wordBreak: "break-all" }}>
-            Token: {token}
-          </Alert>
-        )}
-      </Paper>
-    </Container>
+    <form onSubmit={handleLogin}>
+      <Container marginY={5} spaceY={3} maxWidth={480}>
+        <Heading as="h2">Log in</Heading>
+        <Stack gap={5}>
+          <Field.Root required>
+            <Field.Label>
+              Username
+              <Field.RequiredIndicator />
+            </Field.Label>
+            <Input
+              name="username"
+              type="text"
+              defaultValue={username}
+              readOnly
+            />
+          </Field.Root>
+          <Field.Root required>
+            <Field.Label>
+              Password
+              <Field.RequiredIndicator />
+            </Field.Label>
+            <Input
+              name="password"
+              type="password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Field.Root>
+          <Button type="submit">Login</Button>
+        </Stack>
+      </Container>
+    </form>
   );
 };
 
