@@ -2,6 +2,7 @@ import {
   Button,
   Container,
   Field,
+  Flex,
   Heading,
   Input,
   NumberInput,
@@ -46,7 +47,7 @@ const CreateProject = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Container spaceY={3} marginY={5} maxWidth={720}>
+      <Flex direction="column" maxWidth="50%" gap={5} marginY={10}>
         <Heading as="h2">Create New Project</Heading>
         <Stack gap={5}>
           <Field.Root required>
@@ -79,9 +80,11 @@ const CreateProject = () => {
               <Input type="date" onChange={handleChange} name="deadline" />
             </Field.Root>
           </Stack>
-          <Button type="submit">Create Project</Button>
+          <Button type="submit" width="fit-content" paddingX={5}>
+            Create Project
+          </Button>
         </Stack>
-      </Container>
+      </Flex>
     </form>
   );
 };
