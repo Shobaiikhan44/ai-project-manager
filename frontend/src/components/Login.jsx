@@ -1,36 +1,39 @@
-import { useState } from "react";
 import {
-  Container,
-  Stack,
-  Field,
   Button,
+  Container,
+  Field,
   Heading,
   Input,
-  Box,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
+import axios from "axios";
+import React from "react";
+import { useState } from "react";
 
 const Login = () => {
   const username = "josefitani";
   const [password, setPassword] = useState("");
-  // const [token, setToken] = useState("");
-  // const [error, setError] = useState("");
+  const [token, setToken] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     console.log({ username, password });
-    // try {
-    //   const response = await axios.post("http://localhost:8000/api/token/", {
-    //     username,
-    //     password,
-    //   });
-    //   setToken(response.data.access);
-    //   localStorage.setItem("accessToken", response.data.access);
-    //   setError("");
-    // } catch (error) {
-    //   console.error("Login failed:", error);
-    //   setError("Invalid credentials. Please try again.");
-    // }
+    try {
+      const response = await axios.post("http://localhost:8000/api/token/", {
+        username,
+        password,
+      });
+      setToken(response.data.access);
+      localStorage.setItem("accessToken", response.data.access);
+      setError("");
+      console.log("Token: ", token);
+    } catch (error) {
+      console.error("Login failed:", error);
+      setError("Invalid credentials. Please try again.");
+    }
   };
 
   return (
@@ -63,6 +66,7 @@ const Login = () => {
           </Field.Root>
           <Button type="submit">Login</Button>
         </Stack>
+        {error && <Text color="red">{error}</Text>}
       </Container>
     </form>
   );

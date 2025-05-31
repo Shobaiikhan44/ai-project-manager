@@ -1,16 +1,14 @@
 import {
   Button,
-  Container,
   Field,
   Flex,
   Heading,
   Input,
-  NumberInput,
   Stack,
-  Text,
   Textarea,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import axios from "axios";
+import React, { useState } from "react";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({
@@ -31,18 +29,18 @@ const CreateProject = () => {
     e.preventDefault();
 
     console.log(formData);
-    // try {
-    //   const token = localStorage.getItem("accessToken");
-    //   await axios.post("http://localhost:8000/api/projects/", formData, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   });
-    //   alert("Project created successfully!");
-    // } catch (err) {
-    //   console.error(err);
-    //   alert("Failed to create project");
-    // }
+    try {
+      const token = localStorage.getItem("accessToken");
+      await axios.post("http://localhost:8000/api/projects/", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      alert("Project created successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to create project");
+    }
   };
 
   return (

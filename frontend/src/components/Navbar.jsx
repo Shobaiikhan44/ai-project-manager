@@ -1,6 +1,7 @@
-import { Box, Flex, Link } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
+import React from "react";
 import { CgGoogleTasks } from "react-icons/cg";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 
 const Navbar = () => {
   const navLinks = [
@@ -22,10 +23,8 @@ const Navbar = () => {
         </NavLink>
         <Box as="ul" display="flex" gap={5}>
           {navLinks.map((link) => (
-            <li>
-              <NavLink to={link.href}>
-                <Link>{link.label}</Link>
-              </NavLink>
+            <li key={link.href}>
+              <NavLink to={link.href}>{link.label}</NavLink>
             </li>
           ))}
         </Box>

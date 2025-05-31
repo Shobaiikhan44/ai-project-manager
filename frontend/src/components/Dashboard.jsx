@@ -1,33 +1,45 @@
-import { Button, Container, Stack, Heading } from "@chakra-ui/react";
-import ProjectsTable from "./ProjectsTable";
+import axios from "axios";
+import React from "react";
+import { useState, useEffect } from "react";
 
 const Dashboard = () => {
-  // const [projects, setProjects] = useState([]);
-  // const [error, setError] = useState("");
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   const fetchProjects = async () => {
-  //     try {
-  //       const token = localStorage.getItem("accessToken");
-  //       const response = await axios.get(
-  //         "http://localhost:8000/api/projects/",
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-  //       setProjects(response.data);
-  //     } catch (err) {
-  //       console.error(err);
-  //       setError("Failed to fetch projects. Please login again.");
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/projects/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setProjects(response.data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch projects. Please login again.");
+      }
+    };
 
-  //   fetchProjects();
-  // }, []);
+    fetchProjects();
+  }, []);
 
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      {projects && (
+        <ul>
+          {projects.map((project) => (
+            <li>{project.title}</li>
+          ))}
+        </ul>
+      )}
+      {error && <p>{error}</p>}
+    </div>
+  );
 };
 
 export default Dashboard;

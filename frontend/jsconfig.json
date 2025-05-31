@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "jsx": "react",
+        "checkJs": true,
         "target": "ESNext",
         "module": "ESNext",
         "moduleResolution": "Bundler",
@@ -8,6 +10,6 @@
             "@/*": [
                 "./src/*"
             ]
-        }
+        },
     }
 }
